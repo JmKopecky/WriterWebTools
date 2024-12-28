@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/scss/header.css">
     <link rel="stylesheet" href="/scss/home.css">
     <link rel="stylesheet" href="/scss/signon.css">
+    <script src="/js/signon.js"></script>
     <script src="https://kit.fontawesome.com/2b6129ab2e.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -42,14 +43,34 @@
     <div id="signon-page">
 
         <form id="signin-form" th:if="${mode.equals('signin')}" onsubmit="return false;">
-            <p>hi</p>
+            <div>
+                <label for="signin_usernameInput">Username</label>
+                <input type="text" id="signin_usernameInput">
+            </div>
+            <div>
+                <label for="signin_passwordInput">Password</label>
+                <input type="password" id="signin_passwordInput">
+            </div>
             <button id="signin-submit">Sign In</button>
+            <a href="/signon?mode=signup">Sign Up</a>
         </form>
 
 
         <form id="signup-form" th:if="${mode.equals('signup')}" onsubmit="return false;">
-            <p>hello</p>
+            <div>
+                <label for="signup_usernameInput">Username</label>
+                <input type="text" id="signup_usernameInput">
+            </div>
+            <div>
+                <label for="signup_passwordInput">Password</label>
+                <input type="password" id="signup_passwordInput">
+            </div>
+            <div>
+                <label for="signup_confirmInput">Confirm Password</label>
+                <input type="password" id="signup_confirmInput">
+            </div>
             <button id="signup-submit">Sign Up</button>
+            <a href="/signon?mode=signin">Sign In</a>
         </form>
 
     </div>

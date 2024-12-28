@@ -101,6 +101,22 @@ button:hover, button:focus, button:active {
   background: $primary;
   color: $secondary;
 }
+label {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.75em;
+  color: $primary;
+}
+input {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+  background: transparent;
+}
 
 
 body {

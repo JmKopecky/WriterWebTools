@@ -1,4 +1,7 @@
 barba.init({
+    preventRunning: true,
+    cacheIgnore: true,
+    prefetchIgnore: true,
     transitions: [{
         name: 'main',
         sync: true,
