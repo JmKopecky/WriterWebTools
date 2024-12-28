@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#000000"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/scss/constants.css">
+    <link rel="stylesheet" href="/scss/typography.css">
     <link rel="stylesheet" href="/scss/header.css">
     <link rel="stylesheet" href="/scss/home.css">
     <link rel="stylesheet" href="/scss/signon.css">
@@ -43,34 +44,39 @@
     <div id="signon-page">
 
         <form id="signin-form" th:if="${mode.equals('signin')}" onsubmit="return false;">
-            <div>
+            <div class="row-align">
                 <label for="signin_usernameInput">Username</label>
                 <input type="text" id="signin_usernameInput">
             </div>
-            <div>
+            <div class="row-align">
                 <label for="signin_passwordInput">Password</label>
                 <input type="password" id="signin_passwordInput">
             </div>
-            <button id="signin-submit">Sign In</button>
-            <a href="/signon?mode=signup">Sign Up</a>
+            <div class="col-align">
+                <button id="signin-submit">Sign In</button>
+                <a href="/signon?mode=signup">Or Sign Up</a>
+            </div>
         </form>
 
 
         <form id="signup-form" th:if="${mode.equals('signup')}" onsubmit="return false;">
-            <div>
+            <div class="row-align">
                 <label for="signup_usernameInput">Username</label>
                 <input type="text" id="signup_usernameInput">
             </div>
-            <div>
+            <div class="row-align">
                 <label for="signup_passwordInput">Password</label>
                 <input type="password" id="signup_passwordInput">
             </div>
-            <div>
+            <div class="row-align">
                 <label for="signup_confirmInput">Confirm Password</label>
                 <input type="password" id="signup_confirmInput">
             </div>
-            <button id="signup-submit">Sign Up</button>
-            <a href="/signon?mode=signin">Sign In</a>
+            <div class="col-align">
+                <button id="signup-submit">Sign Up</button>
+                <a href="/signon?mode=signin">Or Sign In</a>
+            </div>
+
         </form>
 
     </div>

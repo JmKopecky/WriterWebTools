@@ -1,0 +1,158 @@
+@import 'constants';
+
+* {
+  margin: 0;
+}
+
+p {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+}
+a {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: italic;
+  color: $primary;
+  text-decoration: none;
+}
+h1 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 3em;
+  color: $primary;
+}
+strong {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  color: $primary;
+}
+em {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  color: $primary;
+}
+h2 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 650;
+  font-style: normal;
+  font-size: 2.5em;
+  color: $primary;
+}
+h3 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 650;
+  font-style: normal;
+  font-size: 2em;
+  color: $primary;
+}
+h4 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.75em;
+  color: $primary;
+}
+h5 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 550;
+  font-style: normal;
+  font-size: 1.5em;
+  color: $primary;
+}
+h6 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.25em;
+  color: $primary;
+}
+
+
+button {
+  border: 1px solid $primary !important;
+  background: transparent;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  color: $primary;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  transition: background 0.5s, color 0.5s;
+  font-size: 1.25em;
+}
+button:hover, button:focus, button:active {
+  background: $primary;
+  color: $secondary;
+}
+label {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+  font-size: 1.25em;
+}
+input {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+  background: transparent;
+  border: 1px solid $primary;
+  border-radius: 1em;
+  padding: 0.5em;
+}
+
+
+body {
+  background: $secondary;
+}
+
+.page-content {
+  min-height: 100vh;
+  width: 100%;
+}
+
+
+::-moz-selection {
+  color: $secondary;
+  background: $primary;
+}
+::selection {
+  color: $secondary;
+  background: $primary;
+}
+
+
+::-webkit-scrollbar {
+  width: 0.3em;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 0.15em;
+}
+::-webkit-resizer {
+  display: none;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+

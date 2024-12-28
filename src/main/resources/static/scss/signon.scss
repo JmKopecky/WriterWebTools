@@ -1,3 +1,5 @@
+@import 'constants';
+
 #signon-page {
   min-height: 100vh;
   display: flex;
@@ -5,16 +7,37 @@
   justify-content: center;
 
   #signin-form, #signup-form {
-    width: 80vw;
+    max-width: 80vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
     height: 70vh;
     margin-top: 5vh;
-    border: solid red 1px;
+    border: solid $primary 1px;
+    border-radius: 2em;
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: space-evenly;
-    button {
-      width: fit-content;
+
+    .row-align {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+      width:100%;
+      gap: 5vw;
+    }
+
+    .col-align {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5vh;
+      width: 100%;
+      a {
+        font-size: 0.9em;
+      }
     }
   }
 }
