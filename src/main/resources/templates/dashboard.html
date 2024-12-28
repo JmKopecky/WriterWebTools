@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Signon</title>
+    <title>Dashboard</title>
     <!--<link rel="icon" type="image/x-icon" href="/images/logo.png">-->
     <meta name="theme-color" content="#000000"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,53 +32,65 @@
     </div>
     <div id="header-right">
         <a class="header-link" href="/dashboard?page=works">Works</a>
-        <a class="header-link" href="/dashboard?page=stats">Stats</a>
         <a class="header-link" href="/dashboard">Dashboard</a>
         <a class="header-link" id="header-account-icon" href="/signon"><img src="/images/accounticon.png" alt="account-icon"></a>
     </div>
 </div>
 
 
-<div data-barba="container" data-barba-namespace="page" class="page-content" style="position:absolute;">
+<div data-barba="container" data-barba-namespace="dashboard" class="page-content" style="position:absolute;">
 
 
-    <div id="signon-page">
+    <div id="dashboard-page">
 
-        <form id="signin-form" th:if="${mode.equals('signin')}" onsubmit="return false;">
-            <div class="row-align">
-                <label for="signin_usernameInput">Username</label>
-                <input type="text" id="signin_usernameInput">
+        <!--
+        Main landing area with stats on things like word count or whatever,
+        Browse works in tiles, click to access work specific page.
+         -->
+        <div id="dashboard-sidebar">
+            <div id="sidebar-account">
+                <i class="fa-solid fa-user"></i>
+                <h5 id="account-title" th:text="${accountname}"></h5>
             </div>
-            <div class="row-align">
-                <label for="signin_passwordInput">Password</label>
-                <input type="password" id="signin_passwordInput">
+            <div id="sidebar-links">
+                <div class="sidebar-link" th:classappend="${section.equals('dashboard')} ? activepanel : disabled">
+                    <i class="fa-solid fa-book"></i>
+                    <h5 class="sidebar-label">Dashboard</h5>
+                </div>
+                <div class="sidebar-link" th:classappend="${section.equals('works')} ? activepanel : disabled">
+                    <i class="fa-solid fa-book"></i>
+                    <h5 class="sidebar-label">Works</h5>
+                </div>
+                <div class="sidebar-link" th:classappend="${section.equals('create')} ? activepanel : disabled">
+                    <i class="fa-solid fa-book"></i>
+                    <h5 class="sidebar-label">Create</h5>
+                </div>
+                <div class="sidebar-link" th:classappend="${section.equals('goals')} ? activepanel : disabled">
+                    <i class="fa-solid fa-book"></i>
+                    <h5 class="sidebar-label">Goals</h5>
+                </div>
             </div>
-            <div class="col-align">
-                <button id="signin-submit">Sign In</button>
-                <a href="/signon?mode=signup">Or Sign Up</a>
-            </div>
-        </form>
+        </div>
 
 
-        <form id="signup-form" th:if="${mode.equals('signup')}" onsubmit="return false;">
-            <div class="row-align">
-                <label for="signup_usernameInput">Username</label>
-                <input type="text" id="signup_usernameInput">
-            </div>
-            <div class="row-align">
-                <label for="signup_passwordInput">Password</label>
-                <input type="password" id="signup_passwordInput">
-            </div>
-            <div class="row-align">
-                <label for="signup_confirmInput">Confirm Password</label>
-                <input type="password" id="signup_confirmInput">
-            </div>
-            <div class="col-align">
-                <button id="signup-submit">Sign Up</button>
-                <a href="/signon?mode=signin">Or Sign In</a>
-            </div>
+        <div class="dashboard-content" th:if="${section.equals('dashboard')}">
 
-        </form>
+        </div>
+
+
+        <div class="dashboard-content" th:if="${section.equals('works')}">
+
+        </div>
+
+
+        <div class="dashboard-content" th:if="${section.equals('create')}">
+
+        </div>
+
+
+        <div class="dashboard-content" th:if="${section.equals('goals')}">
+
+        </div>
 
     </div>
 

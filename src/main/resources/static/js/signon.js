@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("loaded");
+    signonLogic();
+});
+
+
+function signonLogic() {
     let signinButton = $("#signin-submit");
     signinButton.on("keypress", function(event) {
         if (event.key === "Enter") {
@@ -81,4 +85,4 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         });
     });
-});
+}

@@ -34,6 +34,16 @@ public class Account {
     }
 
 
+    public static boolean exists(String username, AccountRepository repo) {
+        for (Account account : repo.findAll()) {
+            if (account.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public Integer getId() {
         return id;

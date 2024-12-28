@@ -1,0 +1,85 @@
+@import '../constants';
+
+#dashboard-page {
+  min-height: 85vh;
+  display: flex;
+  flex-flow: row;
+  align-items: start;
+  justify-content: center;
+  gap: 2vw;
+  padding-top: 15vh;
+  padding-left: 5%;
+  padding-right: 5%;
+
+  #dashboard-sidebar {
+    height: 79vh;
+    width: 18vw;
+    border: 1px solid $primary;
+    border-radius: 1em;
+    padding-top: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+
+    #sidebar-account {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: start;
+      gap: 2vw;
+      padding: 1vh 1vw;
+      width: 16vw;
+      border-radius: 1em;
+      transition: background 0.5s ease-in-out;
+
+      i {
+        color: $primary;
+        font-size: 1.5em;
+      }
+      h5 {
+        flex: 1;
+      }
+    }
+    #sidebar-account:hover {
+      background: transparentize($accent, 0.5);
+    }
+    #sidebar-links {
+      display: flex;
+      flex-flow: column;
+      align-items: start;
+      justify-content: start;
+      gap: 2vh;
+      padding-top: 5vh;
+      .sidebar-link {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: start;
+        gap: 2vw;
+        padding: 1vh 1vw;
+        width: 16vw;
+        border-radius: 1em;
+        transition: background 0.5s ease-in-out;
+        i {
+          font-size: 1.5em;
+          color: $primary;
+        }
+        h5 {
+          flex: 1;
+        }
+      }
+      .sidebar-link:hover {
+        background: transparentize($accent, 0.5);
+      }
+      .sidebar-link.activepanel {
+        background: $accent;
+      }
+    }
+  }
+
+  .dashboard-content {
+    flex: 1;
+    min-height: 80vh;
+    border: 1px solid $primary;
+    border-radius: 1em;
+  }
+}
