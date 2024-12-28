@@ -1,0 +1,36 @@
+#header {
+  display: flex;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  width: 96%;
+  padding-top: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: 10vh;
+
+  #header-right {
+    display: flex;
+    gap: 1vw;
+    height: 100%;
+    align-items: center;
+
+    .header-link {
+      height: fit-content;
+      font-style: normal;
+    }
+
+    #header-account-icon {
+      height: 80%;
+      aspect-ratio: 1;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 1em;
+      }
+    }
+  }
+}
