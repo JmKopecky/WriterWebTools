@@ -49,4 +49,7 @@ barba.hooks.after((data) => {
     if ($("#signon-page") !== undefined) {
         signonLogic();
     }
+    if ($("#newwork-page") !== undefined) {
+        newworkLogic();
+    }
 });

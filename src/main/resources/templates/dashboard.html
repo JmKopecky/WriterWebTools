@@ -84,7 +84,16 @@
 
 
         <div class="dashboard-content" th:if="${section.equals('create')}">
+            <form id="newwork-form" onsubmit="return false;">
+                <div class="row-align">
+                    <label for="newwork_title">Title</label>
+                    <input type="text" id="newwork_title">
+                </div>
+                <div class="col-align">
+                    <button id="newwork-submit">Create Work</button>
+                </div>
 
+            </form>
         </div>
 
 

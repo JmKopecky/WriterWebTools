@@ -46,6 +46,7 @@ function signonLogic() {
         }).then(r => {
             r.text().then((data) => {
                 console.log(data);
+                barba.go("/dashboard");
             })
         });
     });
@@ -82,6 +83,7 @@ function signonLogic() {
         }).then(r => {
             r.text().then((data) => {
                 console.log(data);
+                barba.go("/dashboard");
             })
         });
     });

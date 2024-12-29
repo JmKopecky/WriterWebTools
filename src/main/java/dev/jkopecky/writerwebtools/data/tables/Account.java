@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @Entity
 public class Account {
 
@@ -13,6 +16,16 @@ public class Account {
     private Integer id;
     private String username;
     private String password;
+
+
+    public static Account get(String username, AccountRepository repository) {
+        for (Account account : repository.findAll()) {
+            if (account.getUsername().equals(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
 
 
     public static Account create(String username, String password, AccountRepository repo) {
@@ -41,6 +54,17 @@ public class Account {
             }
         }
         return false;
+    }
+
+
+    public ArrayList<Work> getWorks(WorkRepository repo) {
+        ArrayList<Work> works = new ArrayList<>();
+        for (Work work : repo.findAll()) {
+            if (work.getAccount().equals(this)) {
+                works.add(work);
+            }
+        }
+        return works;
     }
 
 

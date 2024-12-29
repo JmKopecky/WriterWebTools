@@ -1,0 +1,38 @@
+@import '../constants.css';
+
+
+#newwork-form {
+  height: 40vh;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  border: solid $primary 1px;
+  border-radius: 1em;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .row-align {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+    gap: 5vw;
+    input {
+      width: 60%;
+    }
+  }
+
+  .col-align {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vh;
+    width: 100%;
+    a {
+      font-size: 0.9em;
+    }
+  }
+}
