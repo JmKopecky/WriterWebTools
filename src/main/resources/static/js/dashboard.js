@@ -48,8 +48,8 @@ function dashboardLogic() {
                 }
             }).then(r => {
                 r.text().then((data) => {
-                    console.log(data);
-                })
+                    barba.go("/work?target=" + data);
+                });
             });
         });
     }

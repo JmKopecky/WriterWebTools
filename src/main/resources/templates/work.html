@@ -6,11 +6,7 @@
     <!--<link rel="icon" type="image/x-icon" href="/images/logo.png">-->
     <meta name="theme-color" content="#000000"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/scss/typography.css">
-    <link rel="stylesheet" href="/scss/header.css">
-    <link rel="stylesheet" href="/scss/home.css">
-    <link rel="stylesheet" href="/scss/signon.css">
-    <link rel="stylesheet" href="/scss/dashboard/dashboard.css">
+    <link rel="stylesheet" href="/scss/core.css">
     <script src="/js/signon.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="https://kit.fontawesome.com/2b6129ab2e.js" crossorigin="anonymous"></script>
@@ -31,8 +27,8 @@
         <a id="header-name-link" href="/"><h1 id="header-name">WWT</h1></a>
     </div>
     <div id="header-right">
-        <a class="header-link" href="/dashboard?page=works">Works</a>
-        <a class="header-link" href="/dashboard?page=stats">Stats</a>
+        <a class="header-link" href="/dashboard?section=works">Works</a>
+        <a class="header-link" href="/dashboard?section=stats">Stats</a>
         <a class="header-link" href="/dashboard">Dashboard</a>
         <a class="header-link" id="header-account-icon" href="/signon"><img src="/images/accounticon.png" alt="account-icon"></a>
     </div>
@@ -42,19 +38,30 @@
 <div data-barba="container" data-barba-namespace="page" class="page-content" style="position:absolute;">
 
 
-    <div id="newwork-page">
+    <div id="work-page">
 
-        <form id="newwork-form" onsubmit="return false;">
-            <div class="row-align">
-                <label for="newwork_title">Title</label>
-                <input type="text" id="newwork_title">
-            </div>
-            <div class="col-align">
-                <button id="newwork-submit">Create Work</button>
-                <a href="/dashboard?section=works">Return To Dashboard</a>
-            </div>
+        <div id="chapter-sidebar">
+            <button onclick="createChapterDialog()">New</button>
+        </div>
 
-        </form>
+        <div id="work-info-panel">
+            <h1 id="work-panel-title" th:text="${work.getTitle()}"></h1>
+            <div id="work-metadata-panel">
+                <div id="work-summary">
+                    <label for="summary-input">Summary</label>
+                    <textarea id="summary-input"></textarea>
+                </div>
+
+                <div id="work-otherdata">
+                    <h4 id="work-chapter-count" th:text="${chapters.size() + ' Chapters'}"></h4>
+                    <h4 id="work-word-count">TODO</h4>
+                </div>
+            </div>
+        </div>
+
+        <div id="chapter-panel" style="display: none;">
+
+        </div>
 
     </div>
 

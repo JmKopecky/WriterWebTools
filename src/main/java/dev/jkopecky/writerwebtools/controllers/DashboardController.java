@@ -2,6 +2,7 @@ package dev.jkopecky.writerwebtools.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.jkopecky.writerwebtools.data.Util;
 import dev.jkopecky.writerwebtools.data.tables.Account;
 import dev.jkopecky.writerwebtools.data.tables.AccountRepository;
 import dev.jkopecky.writerwebtools.data.tables.Work;
@@ -59,14 +60,14 @@ public class DashboardController {
             return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
         }
 
-
+        String title = "";
 
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(data);
             String mode = node.get("mode").asText();
             if (mode.equals("create")) {
-                String title = node.get("title").asText();
+                title = node.get("title").asText();
                 Account owner = Account.get(account, accountRepository); //todo authentication
                 Work.createWork(owner, title, workRepository);
             }
@@ -77,6 +78,6 @@ public class DashboardController {
         }
 
 
-        return new ResponseEntity<>("work_created", HttpStatus.OK);
+        return new ResponseEntity<>(Util.toInternalResource(title), HttpStatus.OK);
     }
 }

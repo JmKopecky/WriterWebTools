@@ -117,6 +117,17 @@ input {
   border-radius: 1em;
   padding: 0.5em;
 }
+textarea {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+  background: transparent;
+  border: 1px solid $primary;
+  border-radius: 1em;
+  padding: 0.5em;
+}
 
 
 body {
