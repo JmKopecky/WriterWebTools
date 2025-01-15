@@ -1,9 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-    dashboardLogic();
-});
-
-
-
 function dashboardLogic() {
 
     let targets = $(".sidebar-link");

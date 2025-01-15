@@ -10,26 +10,28 @@
   flex-flow: row;
   align-items: center;
   justify-content: space-evenly;
+  gap: 1vw;
 
   #chapter-sidebar-container {
     position: relative;
     height: 100%;
     width: 23vw;
+    flex-shrink: 0;
 
     #chapter-sidebar-button {
       position: absolute;
       top: 0.5em;
       right: 0.5em;
       i {
-        color: $accent;
+        color: $primary;
         font-size: 3em;
       }
     }
   }
 
   #chapter-sidebar {
-    width: 20vw;
-    padding: 1em;
+    width: 90%;
+    padding: 5%;
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
@@ -84,13 +86,14 @@
       justify-content: center;
       #work-summary {
         flex: 1;
-        width: 100%;
+        max-width: 50%;
+        min-width: 50%;
         height: 100%;
         display: flex;
         flex-flow: column;
         align-items: center;
         justify-content: center;
-        textarea {
+        #summary-input {
           width: 90%;
           flex: 1;
           margin: 4%;
@@ -148,6 +151,7 @@
     align-items: center;
     justify-content: start;
     gap: 5vh;
+    max-width: 65vw;
     #chapter-top {
       width: 90%;
       border-bottom: 1px solid transparentize($primary, 0.5);
@@ -156,13 +160,78 @@
       align-items: center;
       justify-content: space-evenly;
       padding-bottom: 1em;
-      button {
-        width: fit-content;
+      #chapter-title {
+        flex: 1;
+      }
+      #chapter-top-interaction {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 1vw;
+        button {
+          width: fit-content;
+        }
+        i {
+          font-size: 2em;
+          color: $primary;
+        }
       }
     }
     #chapter-content {
       width: 90%;
       flex: 1;
+    }
+  }
+
+
+  #view-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: transparentize($secondary, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999;
+    top: 0;
+    #view-panel {
+      width: 90%;
+      height: 90%;
+      padding: 5%;
+      background: $secondary;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: start;
+      #view-top-options {
+        width: 100%;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: end;
+        gap: 2vw;
+        button {
+          width: fit-content;
+        }
+        i {
+          font-size: 2em;
+          color: $primary;
+        }
+      }
+      #view-panels {
+        flex: 1;
+        width: 100%;
+        height: 90%;
+        margin-top: 5vh;
+        #editor {
+          width: 98%;
+          height: 95%;
+          margin: 2%;
+          border-radius: 1em;
+          border: 1px solid $primary;
+        }
+      }
     }
   }
 

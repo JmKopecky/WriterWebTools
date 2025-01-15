@@ -1,11 +1,17 @@
-document.addEventListener("DOMContentLoaded", () => {
-    workLogic();
-});
-
-
-
 function workLogic() {
 
+    const chapterpanel = new Quill(document.getElementById("chapter-content"), {
+        theme: 'bubble',
+        placeholder: 'In the beginning...'
+    });
+    const summarypanel = new Quill(document.getElementById("summary-input"), {
+        theme: 'bubble',
+        placeholder: 'In the beginning...'
+    });
+    const viewpanel = new Quill(document.getElementById("view-editor"), {
+        theme: 'bubble',
+        placeholder: 'In the beginning...'
+    });
 }
 
 
@@ -63,6 +69,40 @@ function toggleSidebar() {
             duration: 0.5
         });
     }
+}
+
+
+function viewPanel(mode) {
+    if (mode) {
+        $("#view-overlay").css("display","flex");
+    } else {
+        $("#view-overlay").css("display", "none");
+    }
+}
+
+
+
+function saveChapter() {
+    let chtitle = $("#chapter-title").text();
+    let content = $("#chapter-content").val();
+    fetch(window.location.href, {
+        method: "POST",
+        body: JSON.stringify({
+            mode: "save_chapter",
+            target: chtitle,
+            content: content
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).then(r => {
+        r.json().then((data) => {
+            console.log(data);
+            if (data["error"] === "none") {
+
+            }
+        })
+    });
 }
 
 

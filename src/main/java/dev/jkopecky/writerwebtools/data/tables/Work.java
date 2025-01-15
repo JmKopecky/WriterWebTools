@@ -64,6 +64,7 @@ public class Work {
         chapter.setTitle(title);
         chapter.setWork(this);
         chapter.setNumber(index);
+        chapter.buildPath();
 
         try {
             ObjectMapper mapper = new ObjectMapper();

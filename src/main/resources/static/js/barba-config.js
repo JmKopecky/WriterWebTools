@@ -41,8 +41,7 @@ barba.init({
     }]
 });
 
-
-barba.hooks.after((data) => {
+function doInitialSetup() {
     if ($("#dashboard-page") !== undefined) {
         dashboardLogic();
     }
@@ -52,4 +51,12 @@ barba.hooks.after((data) => {
     if ($("#work-page") !== undefined) {
         workLogic();
     }
+}
+
+barba.hooks.after((data) => {
+    doInitialSetup();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    doInitialSetup();
+})

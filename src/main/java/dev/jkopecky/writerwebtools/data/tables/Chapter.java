@@ -31,6 +31,11 @@ public class Chapter implements Comparable<Chapter> {
     }
 
 
+    public void buildPath() {
+        path = System.getProperty("user.home") + "/writerwebtools/" + Util.toInternalResource(work.getAccount().getUsername()) + "/works/" + Util.toInternalResource(work.getTitle()) + "/";
+    }
+
+
     public static ArrayList<Chapter> associatedWith(Work work, ChapterRepository chapterRepository) {
         ArrayList<Chapter> output = new ArrayList<>();
         for (Chapter c : chapterRepository.findAll()) {
@@ -47,15 +52,24 @@ public class Chapter implements Comparable<Chapter> {
         try {
             String fullPath = path + "chapter_" + Util.toInternalResource(getTitle()) + ".txt";
             File file = new File(fullPath);
-            if (file.isFile()) {
-                return Files.readString(file.toPath());
-            } else {
-                //project does not exist, create it.
-                return "file does not exist";
-            }
+            return Files.readString(file.toPath());
         } catch (IOException e) {
             System.out.println(e);
             return "file does not exist";
+        }
+    }
+
+
+    public boolean writeHTML(String html) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String fullPath = path + "chapter_" + Util.toInternalResource(getTitle()) + ".txt";
+            File file = new File(fullPath);
+            mapper.writeValue(file, html);
+            return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
         }
     }
 

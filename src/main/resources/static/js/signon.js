@@ -1,8 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-    signonLogic();
-});
-
-
 function signonLogic() {
     let signinButton = $("#signin-submit");
     signinButton.on("keypress", function(event) {

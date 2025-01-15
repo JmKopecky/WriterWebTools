@@ -87,6 +87,20 @@ public class WorkController {
                 output.put("error", "unrecognized_chapter");
                 return new ResponseEntity<>(output, HttpStatus.OK);
             }
+            if (mode.equals("save_chapter")) {
+                String chapterTitle = node.get("target").asText();
+                String content = node.get("content").asText();
+                Chapter chapter = null;
+                for (Chapter c : Chapter.associatedWith(work, chapterRepository)) {
+                    if (c.getTitle().equals(chapterTitle)) {
+                        chapter = c;
+                    }
+                }
+                if (chapter != null) {
+                    chapter.writeHTML(content);
+                    return new ResponseEntity<>(output, HttpStatus.OK);
+                }
+            }
 
 
 

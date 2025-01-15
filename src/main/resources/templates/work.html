@@ -7,6 +7,8 @@
     <meta name="theme-color" content="#000000"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/scss/core.css">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet" />
     <script src="/js/signon.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/work.js"></script>
@@ -60,7 +62,7 @@
             <div id="work-metadata-panel">
                 <div id="work-summary">
                     <label for="summary-input">Summary</label>
-                    <textarea id="summary-input"></textarea>
+                    <div id="summary-input"></div>
                 </div>
 
                 <div id="work-otherdata">
@@ -71,8 +73,14 @@
         </div>
 
         <div id="chapter-panel" style="display: none;">
-            <div id="chapter-top"><h2 id="chapter-title"></h2><button>Save</button></div>
-            <textarea id="chapter-content"></textarea>
+            <div id="chapter-top">
+                <h2 id="chapter-title"></h2>
+                <div id="chapter-top-interaction">
+                    <i class="fa-solid fa-eye" onclick="viewPanel(true)"></i>
+                    <button onclick="saveChapter()">Save</button>
+                </div>
+            </div>
+            <div id="chapter-content"></div>
         </div>
 
 
@@ -90,15 +98,22 @@
         </div>
 
 
-    </div>
+        <div id="view-overlay" style="display: none;" onclick="hideOverlay(event, this);">
+            <div id="view-panel">
+                <div id="view-top-options">
+                    <button onclick="saveChapter()">Save</button>
+                    <i class="fa-solid fa-eye-slash" onclick="viewPanel(false)"></i>
+                </div>
+                <div id="view-panels">
+                    <div id="view-editor">
 
-
-    <footer>
-        <em id="footer-message">Made from scratch by Joseph Kopecky</em>
-        <div id="footer-links">
-            <a href="https://jkopecky.dev">Portfolio</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+
+
+    </div>
 
 </div>
 
@@ -106,5 +121,7 @@
 </body>
 
 <script src="/js/barba-config.js"></script>
+
+
 
 </html>
