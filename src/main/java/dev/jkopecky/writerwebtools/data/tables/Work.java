@@ -9,6 +9,7 @@ import java.io.IOError;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 @Entity
 public class Work {
@@ -50,6 +51,43 @@ public class Work {
             System.out.println(e);
             return false;
         }
+    }
+
+
+    public boolean createChapter(String title, int index, ChapterRepository chapterRepository) {
+        ArrayList<Chapter> chapters = Chapter.associatedWith(this, chapterRepository);
+        if (index > chapters.size()) {
+            index = chapters.size() + 1;
+        }
+
+        Chapter chapter = new Chapter();
+        chapter.setTitle(title);
+        chapter.setWork(this);
+        chapter.setNumber(index);
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".json";
+            Files.createDirectories(Paths.get(path));
+            File file = new File(fullPath);
+            mapper.writeValue(file, chapter);
+            fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
+            Files.createDirectories(Paths.get(path));
+            file = new File(fullPath);
+            mapper.writeValue(file, "");
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+
+        chapterRepository.save(chapter);
+
+        return true;
+    }
+
+
+    public String toResource() {
+        return Util.toInternalResource(title);
     }
 
 

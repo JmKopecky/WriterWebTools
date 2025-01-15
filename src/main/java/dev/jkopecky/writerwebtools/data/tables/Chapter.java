@@ -1,7 +1,12 @@
 package dev.jkopecky.writerwebtools.data.tables;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import dev.jkopecky.writerwebtools.data.Util;
@@ -35,6 +40,28 @@ public class Chapter implements Comparable<Chapter> {
         }
         Collections.sort(output);
         return output;
+    }
+
+
+    public String retrieveHTML() {
+        try {
+            String fullPath = path + "chapter_" + Util.toInternalResource(getTitle()) + ".txt";
+            File file = new File(fullPath);
+            if (file.isFile()) {
+                return Files.readString(file.toPath());
+            } else {
+                //project does not exist, create it.
+                return "file does not exist";
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+            return "file does not exist";
+        }
+    }
+
+
+    public String toResource() {
+        return Util.toInternalResource(getTitle());
     }
 
 

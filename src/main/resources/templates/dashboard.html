@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/scss/core.css">
     <script src="/js/signon.js"></script>
     <script src="/js/dashboard.js"></script>
+    <script src="/js/work.js"></script>
     <script src="https://kit.fontawesome.com/2b6129ab2e.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -74,8 +75,10 @@
         </div>
 
 
-        <div class="dashboard-content" th:if="${section.equals('works')}">
-
+        <div class="dashboard-content" id="dashboard-work" th:if="${section.equals('works')}">
+            <div class="work-tile" th:each="work:${works}">
+                <a th:href="${'/work?target=' + work.toResource()}"><h3 th:text="${work.getTitle()}"></h3></a>
+            </div>
         </div>
 
 

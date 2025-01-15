@@ -86,4 +86,13 @@
 
 
   @import 'newwork';
+
+  #dashboard-work {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-evenly;
+    overflow: scroll;
+    gap: 1vh;
+  }
 }

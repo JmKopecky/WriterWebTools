@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/scss/core.css">
     <script src="/js/signon.js"></script>
     <script src="/js/dashboard.js"></script>
+    <script src="/js/work.js"></script>
     <script src="https://kit.fontawesome.com/2b6129ab2e.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -38,10 +39,20 @@
 <div data-barba="container" data-barba-namespace="page" class="page-content" style="position:absolute;">
 
 
+
     <div id="work-page">
 
-        <div id="chapter-sidebar">
-            <button onclick="createChapterDialog()">New</button>
+        <div id="chapter-sidebar-container">
+            <div id="chapter-sidebar">
+                <h3>Chapters</h3>
+                <div class="chapter-nav-tile" th:each="chapter:${chapters}" th:attr="onclick=|selectChapter('${chapter.toResource()}')|">
+                    <h4 class="chapter-nav-text" th:text="${chapter.getNumber() + ': ' + chapter.getTitle()}"></h4>
+                </div>
+                <button onclick="createChapterDialog()">New</button>
+            </div>
+            <div id="chapter-sidebar-button" class="open" onclick="toggleSidebar();">
+                <i class="fa-solid fa-bars"></i>
+            </div>
         </div>
 
         <div id="work-info-panel">
@@ -60,8 +71,24 @@
         </div>
 
         <div id="chapter-panel" style="display: none;">
-
+            <div id="chapter-top"><h2 id="chapter-title"></h2><button>Save</button></div>
+            <textarea id="chapter-content"></textarea>
         </div>
+
+
+        <div id="new-chapter-bg" style="display: none;" onclick="hideOverlay(event, this);">
+            <form id="new-chapter-popup" onsubmit="return false;">
+                <label for="new-chapter-name-input">Name</label>
+                <input type="text" id="new-chapter-name-input">
+                <label for="new-chapter-number-input">Chapter</label>
+                <div id="side-align-chapter">
+                    <input type="text" id="new-chapter-number-input">
+                    <h4 th:text="${'/' + chapters.size()}"></h4>
+                </div>
+                <button onclick="createChapterFinal()">Create</button>
+            </form>
+        </div>
+
 
     </div>
 
