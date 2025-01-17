@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -65,7 +66,11 @@ public class Chapter implements Comparable<Chapter> {
             ObjectMapper mapper = new ObjectMapper();
             String fullPath = path + "chapter_" + Util.toInternalResource(getTitle()) + ".txt";
             File file = new File(fullPath);
-            mapper.writeValue(file, html);
+            FileWriter fileWriter = new FileWriter(file);
+            System.out.println(html);
+            fileWriter.write(html);
+            fileWriter.close();
+            //mapper.writeValue(file, html);
             return true;
         } catch (IOException e) {
             System.out.println(e);

@@ -1,16 +1,64 @@
-function workLogic() {
+let chapterPanel;
+let summaryPanel;
+let largeViewPanel;
 
-    const chapterpanel = new Quill(document.getElementById("chapter-content"), {
+let pendingSave = false;
+
+function workLogic() {
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block','link', 'image'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'align': [] }],
+        ['clean']
+    ];
+
+    chapterPanel = new Quill(document.getElementById("chapter-content"), {
+        modules: {
+            toolbar: toolbarOptions
+        },
         theme: 'bubble',
         placeholder: 'In the beginning...'
     });
-    const summarypanel = new Quill(document.getElementById("summary-input"), {
+    summaryPanel = new Quill(document.getElementById("summary-input"), {
+        modules: {
+            toolbar: toolbarOptions
+        },
         theme: 'bubble',
         placeholder: 'In the beginning...'
     });
-    const viewpanel = new Quill(document.getElementById("view-editor"), {
+    largeViewPanel = new Quill(document.getElementById("view-editor"), {
+        modules: {
+            toolbar: toolbarOptions
+        },
         theme: 'bubble',
         placeholder: 'In the beginning...'
+    });
+
+    largeViewPanel.on('text-change', (delta, olddelta, source) => {
+        lenis.resize();
+        //wait a few seconds, then save.
+        if (!pendingSave) {
+            pendingSave = true;
+            setTimeout(() => {
+                pendingSave = false;
+                saveChapter();
+            }, 1000);
+        }
+    });
+    chapterPanel.on('text-change', (delta, olddelta, source) => {
+        if (!pendingSave) {
+            pendingSave = true;
+            setTimeout(() => {
+                pendingSave = false;
+                saveChapter();
+            }, 1000);
+        }
     });
 }
 
@@ -75,8 +123,13 @@ function toggleSidebar() {
 function viewPanel(mode) {
     if (mode) {
         $("#view-overlay").css("display","flex");
+        $("#view-overlay").children(".ql-editor").focus();
+        largeViewPanel.setContents(chapterPanel.getContents());
+        lenis.resize();
     } else {
         $("#view-overlay").css("display", "none");
+        chapterPanel.setContents(largeViewPanel.getContents());
+        lenis.resize();
     }
 }
 
@@ -84,7 +137,15 @@ function viewPanel(mode) {
 
 function saveChapter() {
     let chtitle = $("#chapter-title").text();
-    let content = $("#chapter-content").val();
+    let content;
+    if ($("#view-overlay").css("display") === "none") {
+        content = chapterPanel.getSemanticHTML();
+    } else {
+        content = largeViewPanel.getSemanticHTML();
+    }
+    //todo bug where content has wrapping quotes
+    console.log(content);
+    navigator.clipboard.writeText(content);
     fetch(window.location.href, {
         method: "POST",
         body: JSON.stringify({
@@ -124,6 +185,8 @@ function selectChapter(target) {
                 $("#work-info-panel").css("display", "none");
                 $("#chapter-panel").css("display", "flex");
                 $("#chapter-title").text(data["title"]);
+                chapterPanel.clipboard.dangerouslyPasteHTML(data["content"]);
+                largeViewPanel.clipboard.dangerouslyPasteHTML(data["content"]);
                 $("#chapter-content").val(data["content"]);
             }
         })

@@ -10,7 +10,7 @@
     </parent>
     <groupId>dev.jkopecky</groupId>
     <artifactId>WriterWebTools</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-alpha</version>
     <name>WriterWebTools</name>
     <description>WriterWebTools</description>
     <url/>

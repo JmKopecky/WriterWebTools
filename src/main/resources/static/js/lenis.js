@@ -1,7 +1,9 @@
+let lenis;
+
 let isMobile = true;
 if (window.matchMedia("(pointer:fine)").matches) {
     isMobile = false;
-    const lenis = new Lenis({
+    lenis = new Lenis({
         syncTouch: true,
         duration: 1.5
     })

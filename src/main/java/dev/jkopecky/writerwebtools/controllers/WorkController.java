@@ -90,6 +90,7 @@ public class WorkController {
             if (mode.equals("save_chapter")) {
                 String chapterTitle = node.get("target").asText();
                 String content = node.get("content").asText();
+                System.out.println(content);
                 Chapter chapter = null;
                 for (Chapter c : Chapter.associatedWith(work, chapterRepository)) {
                     if (c.getTitle().equals(chapterTitle)) {

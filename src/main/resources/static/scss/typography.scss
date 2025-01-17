@@ -145,6 +145,7 @@ textarea {
   border: 1px solid $primary;
   border-radius: 1em;
   padding: 0.5em;
+  overscroll-behavior: contain;
 }
 
 
