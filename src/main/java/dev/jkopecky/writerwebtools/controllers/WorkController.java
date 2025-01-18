@@ -80,6 +80,7 @@ public class WorkController {
                 for (Chapter c : Chapter.associatedWith(work, chapterRepository)) {
                     if (c.toResource().equals(node.get("target").asText())) {
                         output.put("content", c.retrieveHTML());
+                        output.put("notes", c.readNotes());
                         output.put("title", c.getTitle());
                         return new ResponseEntity<>(output, HttpStatus.OK);
                     }
@@ -90,7 +91,7 @@ public class WorkController {
             if (mode.equals("save_chapter")) {
                 String chapterTitle = node.get("target").asText();
                 String content = node.get("content").asText();
-                System.out.println(content);
+                String notes = node.get("notes").asText();
                 Chapter chapter = null;
                 for (Chapter c : Chapter.associatedWith(work, chapterRepository)) {
                     if (c.getTitle().equals(chapterTitle)) {
@@ -99,6 +100,7 @@ public class WorkController {
                 }
                 if (chapter != null) {
                     chapter.writeHTML(content);
+                    chapter.writeNotes(notes);
                     return new ResponseEntity<>(output, HttpStatus.OK);
                 }
             }

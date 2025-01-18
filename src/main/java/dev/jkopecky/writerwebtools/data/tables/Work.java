@@ -67,15 +67,22 @@ public class Work {
         chapter.buildPath();
 
         try {
+            //core chapter save
             ObjectMapper mapper = new ObjectMapper();
             String fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".json";
             Files.createDirectories(Paths.get(path));
             File file = new File(fullPath);
             mapper.writeValue(file, chapter);
+            //chapter content file
             fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
             Files.createDirectories(Paths.get(path));
             file = new File(fullPath);
-            mapper.writeValue(file, "");
+            file.createNewFile();
+            //chapter-specific notes file
+            fullPath = path + "note_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
+            Files.createDirectories(Paths.get(path));
+            file = new File(fullPath);
+            file.createNewFile();
         } catch (IOException e) {
             System.out.println(e);
             return false;

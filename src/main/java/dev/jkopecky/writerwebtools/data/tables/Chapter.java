@@ -67,14 +67,40 @@ public class Chapter implements Comparable<Chapter> {
             String fullPath = path + "chapter_" + Util.toInternalResource(getTitle()) + ".txt";
             File file = new File(fullPath);
             FileWriter fileWriter = new FileWriter(file);
-            System.out.println(html);
             fileWriter.write(html);
             fileWriter.close();
-            //mapper.writeValue(file, html);
             return true;
         } catch (IOException e) {
             System.out.println(e);
             return false;
+        }
+    }
+
+
+    public boolean writeNotes(String notes) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String fullPath = path + "note_" + Util.toInternalResource(getTitle()) + ".txt";
+            File file = new File(fullPath);
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(notes);
+            fileWriter.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+
+    public String readNotes() {
+        try {
+            String fullPath = path + "note_" + Util.toInternalResource(getTitle()) + ".txt";
+            File file = new File(fullPath);
+            return Files.readString(file.toPath());
+        } catch (IOException e) {
+            System.out.println(e);
+            return "file does not exist";
         }
     }
 

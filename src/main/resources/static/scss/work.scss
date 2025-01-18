@@ -178,8 +178,9 @@
         }
       }
     }
-    #chapter-content {
+    #chapter-content, #chapter-notes {
       width: 90%;
+      max-width: 90%;
       flex: 1;
       min-height: 0;
     }
@@ -211,7 +212,7 @@
         flex-flow: row;
         align-items: center;
         justify-content: end;
-        gap: 2vw;
+        gap: 1vw;
         position: fixed;
         top: 0;
         right: 2%;
@@ -228,21 +229,29 @@
 
       #view-panels {
         flex: 1;
+        display: flex;
+        flex-flow: row;
         width: 70%;
         border-left: 1px solid lighten($secondary, 5%);
         border-right: 1px solid lighten($secondary, 5%);
         border-top: none;
         border-bottom: none;
         min-height: 86vh;
-        #view-editor {
-          width: 98%;
-          margin-left: 2%;
-          margin-right: 2%;
+        #view-editor, #view-note-editor {
+          flex-grow: 1;
           min-height: 86vh;
           .ql-editor {
             border: none !important;
             min-height: 86vh;
           }
+        }
+        #view-editor {
+          max-width: 100%;
+        }
+        #view-note-editor {
+          max-width: 30%;
+          background: lighten($secondary, 1%);
+          border-radius: 1em;
         }
       }
     }

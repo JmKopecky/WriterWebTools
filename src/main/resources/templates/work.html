@@ -76,11 +76,13 @@
             <div id="chapter-top">
                 <h2 id="chapter-title"></h2>
                 <div id="chapter-top-interaction">
+                    <i id="small-note-icon" class="fa-solid fa-note-sticky" onclick="toggleNotes(false)"></i>
                     <i class="fa-solid fa-eye" onclick="viewPanel(true)"></i>
-                    <button onclick="saveChapter()">Save</button>
+                    <button onclick="saveChapter(true)">Save</button>
                 </div>
             </div>
             <div id="chapter-content"></div>
+            <div id="chapter-notes" style="display: none;"></div>
         </div>
 
 
@@ -101,10 +103,14 @@
         <div id="view-overlay" style="display: none;" onclick="hideOverlay(event, this);">
             <div id="view-panel">
                 <div id="view-top-options">
-                    <button onclick="saveChapter()">Save</button>
+                    <i class="fa-solid fa-note-sticky" onclick="toggleNotes(true)"></i>
                     <i class="fa-solid fa-eye-slash" onclick="viewPanel(false)"></i>
+                    <button onclick="saveChapter(true)">Save</button>
                 </div>
                 <div id="view-panels">
+                    <div id="view-note-editor" style="display: none;">
+
+                    </div>
                     <div id="view-editor">
 
                     </div>

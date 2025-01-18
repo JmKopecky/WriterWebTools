@@ -1,6 +1,8 @@
 let chapterPanel;
 let summaryPanel;
 let largeViewPanel;
+let notePanel;
+let smallNotePanel;
 
 let pendingSave = false;
 
@@ -39,6 +41,20 @@ function workLogic() {
         theme: 'bubble',
         placeholder: 'In the beginning...'
     });
+    notePanel = new Quill(document.getElementById("view-note-editor"), {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'bubble',
+        placeholder: 'Notepad at the ready...'
+    });
+    smallNotePanel = new Quill(document.getElementById("chapter-notes"), {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'bubble',
+        placeholder: 'Notepad at the ready...'
+    });
 
     largeViewPanel.on('text-change', (delta, olddelta, source) => {
         lenis.resize();
@@ -47,7 +63,7 @@ function workLogic() {
             pendingSave = true;
             setTimeout(() => {
                 pendingSave = false;
-                saveChapter();
+                saveChapter(false);
             }, 1000);
         }
     });
@@ -56,10 +72,33 @@ function workLogic() {
             pendingSave = true;
             setTimeout(() => {
                 pendingSave = false;
-                saveChapter();
+                saveChapter(false);
             }, 1000);
         }
     });
+    notePanel.on('text-change', (delta, olddelta, source) => {
+        lenis.resize();
+        //wait a few seconds, then save.
+        if (!pendingSave) {
+            pendingSave = true;
+            setTimeout(() => {
+                pendingSave = false;
+                saveChapter(false);
+            }, 1000);
+        }
+    });
+    smallNotePanel.on('text-change', (delta, olddelta, source) => {
+        lenis.resize();
+        //wait a few seconds, then save.
+        if (!pendingSave) {
+            pendingSave = true;
+            setTimeout(() => {
+                pendingSave = false;
+                saveChapter(false);
+            }, 1000);
+        }
+    });
+    registerBindings();
 }
 
 
@@ -93,6 +132,12 @@ function toggleSidebar() {
             ease: "power2.inout",
             duration: 0.5
         });
+
+        gsap.to($("#chapter-panel"), {
+            maxWidth: "90vw",
+            duration: 0.5,
+            ease: "power2.inout"
+        });
     } else {
         button.classList.add("open");
         gsap.to(button, {
@@ -116,6 +161,11 @@ function toggleSidebar() {
             ease: "power2.inout",
             duration: 0.5
         });
+        gsap.to($("#chapter-panel"), {
+            maxWidth: "65vw",
+            duration: 0.5,
+            ease: "power2.inout"
+        })
     }
 }
 
@@ -125,40 +175,74 @@ function viewPanel(mode) {
         $("#view-overlay").css("display","flex");
         $("#view-overlay").children(".ql-editor").focus();
         largeViewPanel.setContents(chapterPanel.getContents());
+        notePanel.setContents(smallNotePanel.getContents());
         lenis.resize();
     } else {
         $("#view-overlay").css("display", "none");
         chapterPanel.setContents(largeViewPanel.getContents());
+        smallNotePanel.setContents(notePanel.getContents());
         lenis.resize();
     }
 }
 
 
+function registerBindings() {
+    let targets = [largeViewPanel, chapterPanel, notePanel, smallNotePanel];
+    for (const elem of targets) {
+        elem.keyboard.addBinding({ key: '-' }, {
+            collapsed: true,
+        }, function(range, context) {
+            let index = elem.getSelection(true)["index"] - 1;
+            if (elem.getText(index, 1) === '-') {
+                elem.deleteText(index, 1);
+                elem.insertText(index, "—");
+                return false;
+            }
+            return true;
+        });
+        elem.keyboard.addBinding({
+            key: ['8', '*'],
+            shortKey: true,
+            shiftKey: true,
+        }, function(range, context) {
+            if (elem.getFormat(range, 1)["list"] !== undefined && elem.getFormat(range, 1)["list"] === 'bullet') {
+                elem.formatLine(0,1,'list', false);
+            } else {
+                elem.formatLine(range, 1, 'list', 'bullet');
+            }
+        });
+    }
+}
 
-function saveChapter() {
+
+
+function saveChapter(clipboard) {
     let chtitle = $("#chapter-title").text();
+    let notes;
     let content;
     if ($("#view-overlay").css("display") === "none") {
         content = chapterPanel.getSemanticHTML();
+        notes = smallNotePanel.getSemanticHTML();
     } else {
         content = largeViewPanel.getSemanticHTML();
+        notes = notePanel.getSemanticHTML();
     }
-    //todo bug where content has wrapping quotes
-    console.log(content);
-    navigator.clipboard.writeText(content);
+    if (clipboard) {
+        navigator.clipboard.writeText(content);
+    }
     fetch(window.location.href, {
         method: "POST",
         body: JSON.stringify({
             mode: "save_chapter",
             target: chtitle,
-            content: content
+            content: content,
+            notes: notes
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     }).then(r => {
         r.json().then((data) => {
-            console.log(data);
             if (data["error"] === "none") {
 
             }
@@ -168,7 +252,6 @@ function saveChapter() {
 
 
 function selectChapter(target) {
-    console.log("test");
     fetch(window.location.href, {
         method: "POST",
         body: JSON.stringify({
@@ -180,17 +263,90 @@ function selectChapter(target) {
         }
     }).then(r => {
         r.json().then((data) => {
-            console.log(data);
             if (data["error"] === "none") {
                 $("#work-info-panel").css("display", "none");
                 $("#chapter-panel").css("display", "flex");
                 $("#chapter-title").text(data["title"]);
                 chapterPanel.clipboard.dangerouslyPasteHTML(data["content"]);
                 largeViewPanel.clipboard.dangerouslyPasteHTML(data["content"]);
+                notePanel.clipboard.dangerouslyPasteHTML(data["notes"]);
+                smallNotePanel.clipboard.dangerouslyPasteHTML(data["notes"]);
                 $("#chapter-content").val(data["content"]);
+
             }
         })
     });
+}
+
+
+function toggleNotes(fullscreen) {
+
+    if (fullscreen) {
+        if ($("#view-note-editor").css("display") !== "none") {
+            gsap.to($("#view-panels"), {
+                width: "70%",
+                duration: 0.5,
+                ease: "power2.inout"
+            });
+            gsap.to($("#view-note-editor"), {
+                maxWidth: 0,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2-inout",
+                onComplete: () => {
+                    $("#view-note-editor").css("display", "none");
+                }
+            });
+            gsap.to($("#view-editor"), {
+                maxWidth: "100%",
+                duration: 0.5,
+                ease: "power2.inout"
+            })
+        } else {
+            $("#view-note-editor").css("display", "block");
+            $("#view-note-editor").css("max-width", "0%");
+            $("#view-note-editor").css("opacity", "0");
+            gsap.to($("#view-note-editor"), {
+                maxWidth: "30%",
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.inout"
+            });
+            gsap.to($("#view-panels"), {
+                width: "90%",
+                duration: 0.5,
+                ease: "power2.inout"
+            });
+            gsap.to($("#view-editor"), {
+                maxWidth: "70%",
+                duration: 0.5,
+                ease: "power2.inout"
+            })
+        }
+    } else {
+        if ($("#chapter-notes").css("display") === "block") {
+            $("#chapter-content").css("display", "block");
+            $("#chapter-notes").css("display", "none");
+            gsap.to($("#small-note-icon"), {
+                fontSize: "2em",
+                duration: 0.5,
+                ease: "power2.inout"
+            });
+        } else {
+            $("#chapter-content").css("display", "none");
+            $("#chapter-notes").css("display", "block");
+            gsap.set($("#small-note-icon"), {fontSize: "2em"});
+            gsap.to($("#small-note-icon"), {
+                fontSize: "2.5em",
+                duration: 0.5,
+                ease: "power2.inout"
+            });
+        }
+
+    }
+
+
+
 }
 
 
