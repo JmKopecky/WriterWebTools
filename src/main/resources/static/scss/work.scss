@@ -43,8 +43,17 @@
     background: darken($secondary, 1%);
     position: relative;
     border-radius: 1em;
-    h3 {
+    #sidebar-top {
       width: 100%;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: start;
+      height: 2em;
+      i {
+        font-size: 2em;
+        color: $primary;
+      }
     }
     .chapter-nav-tile {
       border-radius: 1em;
@@ -76,6 +85,7 @@
     align-items: center;
     justify-content: start;
     gap: 5vh;
+    max-width: 65vw;
 
     #work-metadata-panel {
       flex: 1;
@@ -84,22 +94,6 @@
       flex-flow: row;
       align-items: center;
       justify-content: center;
-      #work-summary {
-        flex: 1;
-        max-width: 50%;
-        min-width: 50%;
-        height: 100%;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        justify-content: center;
-        #summary-input {
-          width: 90%;
-          flex: 1;
-          margin: 4%;
-          padding: 1%;
-        }
-      }
       #work-otherdata {
         flex: 1;
         display: flex;
@@ -160,8 +154,12 @@
       align-items: center;
       justify-content: space-evenly;
       padding-bottom: 1em;
+      gap: 1vw;
       #chapter-title {
         flex: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
       #chapter-top-interaction {
         display: flex;
@@ -218,6 +216,7 @@
         right: 2%;
         padding-top: 2%;
         background: $secondary;
+        z-index: 99999999999;
         button {
           width: fit-content;
         }
@@ -252,6 +251,10 @@
           max-width: 30%;
           background: lighten($secondary, 1%);
           border-radius: 1em;
+          max-height: 86vh;
+          position: sticky;
+          top: 12vh;
+          overflow-y: scroll;
         }
       }
     }

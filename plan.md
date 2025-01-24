@@ -6,6 +6,10 @@
   * Character sheets
   * Misc notes
 
+
+# IDEA: 
+* Customization options (font, line height, color, etc) (premium?)
+
 Don't even bother build for mobile yet. 
 
 

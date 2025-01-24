@@ -33,7 +33,7 @@ public class Chapter implements Comparable<Chapter> {
 
 
     public void buildPath() {
-        path = System.getProperty("user.home") + "/writerwebtools/" + Util.toInternalResource(work.getAccount().getUsername()) + "/works/" + Util.toInternalResource(work.getTitle()) + "/";
+        path = System.getProperty("user.home") + "/writerwebtools/" + Util.toInternalResource(work.getAccount().getUsername()) + "/works/" + Util.toInternalResource(work.getTitle()) + "/chapters/";
     }
 
 

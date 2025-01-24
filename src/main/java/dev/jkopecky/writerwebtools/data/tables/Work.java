@@ -69,18 +69,18 @@ public class Work {
         try {
             //core chapter save
             ObjectMapper mapper = new ObjectMapper();
-            String fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".json";
-            Files.createDirectories(Paths.get(path));
+            String fullPath = chapter.getPath() + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".json";
+            Files.createDirectories(Paths.get(chapter.getPath()));
             File file = new File(fullPath);
             mapper.writeValue(file, chapter);
             //chapter content file
-            fullPath = path + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
-            Files.createDirectories(Paths.get(path));
+            fullPath = chapter.getPath() + "chapter_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
+            Files.createDirectories(Paths.get(chapter.getPath()));
             file = new File(fullPath);
             file.createNewFile();
             //chapter-specific notes file
-            fullPath = path + "note_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
-            Files.createDirectories(Paths.get(path));
+            fullPath = chapter.getPath() + "note_" + Util.toInternalResource(chapter.getTitle()) + ".txt";
+            Files.createDirectories(Paths.get(chapter.getPath()));
             file = new File(fullPath);
             file.createNewFile();
         } catch (IOException e) {

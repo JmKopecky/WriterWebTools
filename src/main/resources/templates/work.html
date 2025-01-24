@@ -14,6 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/@barba/core" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet" />
     <script src="/js/lenis.js"></script>
@@ -46,7 +49,11 @@
 
         <div id="chapter-sidebar-container">
             <div id="chapter-sidebar">
-                <h3>Chapters</h3>
+                <div id="sidebar-top">
+                    <i id="sidebar-icon" class="fa-solid fa-house" onclick="returnToWork(true)" style="display: none;"></i>
+                    <h3 id="sidebar-title">Chapters</h3>
+                </div>
+
                 <div class="chapter-nav-tile" th:each="chapter:${chapters}" th:attr="onclick=|selectChapter('${chapter.toResource()}')|">
                     <h4 class="chapter-nav-text" th:text="${chapter.getNumber() + ': ' + chapter.getTitle()}"></h4>
                 </div>
@@ -60,11 +67,6 @@
         <div id="work-info-panel">
             <h1 id="work-panel-title" th:text="${work.getTitle()}"></h1>
             <div id="work-metadata-panel">
-                <div id="work-summary">
-                    <label for="summary-input">Summary</label>
-                    <div id="summary-input"></div>
-                </div>
-
                 <div id="work-otherdata">
                     <h4 id="work-chapter-count" th:text="${chapters.size() + ' Chapters'}"></h4>
                     <h4 id="work-word-count">TODO</h4>

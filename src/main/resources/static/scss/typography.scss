@@ -10,6 +10,7 @@ p {
   font-weight: 400;
   font-style: normal;
   color: $primary;
+  font-size: 1.07em;
 }
 a {
   font-family: Verdana, sans-serif;
@@ -146,6 +147,19 @@ textarea {
   border-radius: 1em;
   padding: 0.5em;
   overscroll-behavior: contain;
+  p {
+    margin-bottom: 1.286em !important;
+    margin-top: 1.286em !important;
+    line-height: 1.5;
+  }
+}
+li {
+  font-family: Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $primary;
+  font-size: 1.07em;
 }
 
 

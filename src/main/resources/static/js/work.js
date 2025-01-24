@@ -1,5 +1,4 @@
 let chapterPanel;
-let summaryPanel;
 let largeViewPanel;
 let notePanel;
 let smallNotePanel;
@@ -20,15 +19,12 @@ function workLogic() {
         ['clean']
     ];
 
+
+
+
     chapterPanel = new Quill(document.getElementById("chapter-content"), {
         modules: {
-            toolbar: toolbarOptions
-        },
-        theme: 'bubble',
-        placeholder: 'In the beginning...'
-    });
-    summaryPanel = new Quill(document.getElementById("summary-input"), {
-        modules: {
+            syntax: true,
             toolbar: toolbarOptions
         },
         theme: 'bubble',
@@ -36,6 +32,7 @@ function workLogic() {
     });
     largeViewPanel = new Quill(document.getElementById("view-editor"), {
         modules: {
+            syntax: true,
             toolbar: toolbarOptions
         },
         theme: 'bubble',
@@ -43,17 +40,19 @@ function workLogic() {
     });
     notePanel = new Quill(document.getElementById("view-note-editor"), {
         modules: {
+            syntax: true,
             toolbar: toolbarOptions
         },
         theme: 'bubble',
-        placeholder: 'Notepad at the ready...'
+        placeholder: 'In the beginning...'
     });
     smallNotePanel = new Quill(document.getElementById("chapter-notes"), {
         modules: {
+            syntax: true,
             toolbar: toolbarOptions
         },
         theme: 'bubble',
-        placeholder: 'Notepad at the ready...'
+        placeholder: 'In the beginning...'
     });
 
     largeViewPanel.on('text-change', (delta, olddelta, source) => {
@@ -102,6 +101,72 @@ function workLogic() {
 }
 
 
+function retrieveHtml(target) {
+    let output = "" + target.getSemanticHTML();
+    output = output.replaceAll("&nbsp;", " "); //kill nbsp spaces because they suck for ao3 formatting
+    output = output.replaceAll(/<pre.*>/gi, "<pre><code>");
+    output = output.replaceAll("</pre>", "</code></pre>");
+    return output;
+}
+
+
+function returnToWork(toWork) {
+    if (toWork) {
+        gsap.to($("#chapter-panel"), {
+            opacity: 0,
+            duration: 0.25,
+            ease: "power2.out",
+            onComplete: () => {
+                $("#chapter-panel").css("display", "none");
+                $("#work-info-panel").css("display", "flex");
+                $("#work-info-panel").css("opacity", "0");
+                $("#chapter-panel").css("opacity", "1");
+                gsap.to($("#work-info-panel"),{
+                    opacity: 1,
+                    duration: 0.25,
+                    ease: "power2.in"
+                });
+            }
+        });
+
+        gsap.to($("#sidebar-icon"), {
+            opacity: 0,
+            duration: 0.25,
+            ease: "power2.out",
+            onComplete: () => {
+                $("#sidebar-title").css("display", "block");
+                $("#sidebar-icon").css("display", "none");
+                $("#sidebar-icon").css("opacity", "1");
+                $("#sidebar-title").css("opacity", "0");
+                gsap.to($("#sidebar-title"), {
+                    opacity: 1,
+                    duration: 0.25,
+                    ease: "power2.out"
+                })
+            }
+        })
+    } else {
+        gsap.to($("#sidebar-title"), {
+            opacity: 0,
+            duration: 0.25,
+            ease: "power2.out",
+            onComplete: () => {
+                $("#sidebar-title").css("display", "none");
+                $("#sidebar-title").css("opacity", "1");
+                $("#sidebar-icon").css("opacity", "0");
+                $("#sidebar-icon").css("display", "block");
+                gsap.to($("#sidebar-icon"), {
+                    opacity: 1,
+                    duration: 0.25,
+                    ease: "power2.in"
+                })
+            }
+        })
+
+    }
+}
+
+
 function toggleSidebar() {
     let button = document.getElementById("chapter-sidebar-button");
     let container = document.getElementById("chapter-sidebar-container");
@@ -138,6 +203,11 @@ function toggleSidebar() {
             duration: 0.5,
             ease: "power2.inout"
         });
+        gsap.to($("#work-info-panel"), {
+            maxWidth: "90vw",
+            duration: 0.5,
+            ease: "power2.inout"
+        });
     } else {
         button.classList.add("open");
         gsap.to(button, {
@@ -165,7 +235,12 @@ function toggleSidebar() {
             maxWidth: "65vw",
             duration: 0.5,
             ease: "power2.inout"
-        })
+        });
+        gsap.to($("#work-info-panel"), {
+            maxWidth: "65vw",
+            duration: 0.5,
+            ease: "power2.inout"
+        });
     }
 }
 
@@ -221,11 +296,11 @@ function saveChapter(clipboard) {
     let notes;
     let content;
     if ($("#view-overlay").css("display") === "none") {
-        content = chapterPanel.getSemanticHTML();
-        notes = smallNotePanel.getSemanticHTML();
+        content = retrieveHtml(chapterPanel)
+        notes = retrieveHtml(smallNotePanel)
     } else {
-        content = largeViewPanel.getSemanticHTML();
-        notes = notePanel.getSemanticHTML();
+        content = retrieveHtml(largeViewPanel)
+        notes = retrieveHtml(notePanel)
     }
     if (clipboard) {
         navigator.clipboard.writeText(content);
@@ -241,12 +316,6 @@ function saveChapter(clipboard) {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).then(r => {
-        r.json().then((data) => {
-            if (data["error"] === "none") {
-
-            }
-        })
     });
 }
 
@@ -264,8 +333,25 @@ function selectChapter(target) {
     }).then(r => {
         r.json().then((data) => {
             if (data["error"] === "none") {
-                $("#work-info-panel").css("display", "none");
-                $("#chapter-panel").css("display", "flex");
+                returnToWork(false);
+
+                gsap.to($("#work-info-panel"), {
+                    opacity: 0,
+                    duration: 0.25,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        $("#work-info-panel").css("display", "none");
+                        $("#chapter-panel").css("display", "flex");
+                        $("#chapter-panel").css("opacity", "0");
+                        $("#work-info-panel").css("opacity", "1");
+                        gsap.to($("#chapter-panel"),{
+                            opacity: 1,
+                            duration: 0.25,
+                            ease: "power2.in"
+                        });
+                    }
+                });
+
                 $("#chapter-title").text(data["title"]);
                 chapterPanel.clipboard.dangerouslyPasteHTML(data["content"]);
                 largeViewPanel.clipboard.dangerouslyPasteHTML(data["content"]);
@@ -382,6 +468,7 @@ function createChapterFinal() {
     }).then(r => {
         r.json().then((data) => {
             console.log(data);
+            location.reload();
         })
     });
 
